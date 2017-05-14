@@ -76,8 +76,8 @@ type OrderInfo struct {
 	Plasmids []Plasmids
 }
 
-//JDecoder : returns struct with relevant order fields
-func (order *OrderInfo) JDecoder(w http.ResponseWriter, r *http.Request) OrderInfo {
+//Jdecoder : returns struct with relevant order fields
+func (order *OrderInfo) Jdecoder(w http.ResponseWriter, r *http.Request) OrderInfo {
 	var o OrderInfo
 	if r.Body == nil {
 		http.Error(w, "please send a request body", 400) //what number for the error?

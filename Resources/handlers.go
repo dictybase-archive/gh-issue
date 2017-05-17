@@ -1,13 +1,26 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 
+	"github.com/dictyBase/gh-issue/models"
 	"github.com/google/go-github/github"
+	"github.com/julienschmidt/httprouter"
+	"github.com/manyminds/api2go/jsonapi"
 )
 
+type Client struct {
+	Github      *github.Client
+	Label       string
+	Respository string
+	Owner       string
+	Logger      *log.Logger
+}
+
+/*
 type GeneralInfo struct {
 	Date    string `json:"date"`
 	OrderId string `json:"orderid"`
@@ -63,7 +76,8 @@ type Plasmids struct {
 	Storage   []Storage
 	Citations []Citations
 }
-
+*/
+/*
 //OrderInfo : update later with real order fields
 type OrderInfo struct {
 	Owner      string `json:"owner"`
@@ -74,23 +88,31 @@ type OrderInfo struct {
 	BillingInfo
 	Strains  []Strains
 	Plasmids []Plasmids
-}
+}*/
 
 //Jdecoder : returns struct with relevant order fields
-func (order *OrderInfo) Jdecoder(w http.ResponseWriter, r *http.Request) OrderInfo {
-	var o OrderInfo
-	if r.Body == nil {
-		http.Error(w, "please send a request body", 400) //what number for the error?
-	}
-	err := json.NewDecoder(r.Body).Decode(&o)
+func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	fmt.Fprint(w, "Welcome!\n")
+}
+
+func Jsondecoder(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var order models.Orderinfo
+	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		http.Error(w, "decoding error!", 400) //what number
+		panic(err) //HANDLE THIS BETTER
 	}
-	return o
+	err = jsonapi.Unmarshal(body, &order)
+	if err != nil {
+		log.Print("unmarshal bad")
+		panic(err) //HANDLE THIS BETTER
+
+	}
+	fmt.Printf("%+v\n", order)
 }
 
 //IssueParser : converts orderinfo struct to github issue request
 //need to implement error handling
+/*
 func (order *OrderInfo) IssueParser(o OrderInfo) (github.IssueRequest, error) {
 	var issue github.IssueRequest
 	issue.Title = &o.Title
@@ -121,7 +143,7 @@ func (order *OrderInfo) IssueParser(o OrderInfo) (github.IssueRequest, error) {
 	| o.ShippingInfo.Phone      | o.BillingInfo.Phone      |
 	| o.ShippingInfo.Email      | o.BillingInfo.Email      |
 	| o.ShippingInfo.Tracking   | o.BillingInfo.Payment    |
-	*/
+
 
 	return issue, nil
-}
+}*/

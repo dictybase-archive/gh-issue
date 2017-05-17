@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -8,7 +9,6 @@ import (
 
 	"github.com/dictyBase/gh-issue/models"
 	"github.com/google/go-github/github"
-	"github.com/julienschmidt/httprouter"
 	"github.com/manyminds/api2go/jsonapi"
 )
 
@@ -91,11 +91,11 @@ type OrderInfo struct {
 }*/
 
 //Jdecoder : returns struct with relevant order fields
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome!\n")
 }
 
-func Jsondecoder(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	var order models.Orderinfo
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -108,6 +108,16 @@ func Jsondecoder(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	}
 	fmt.Printf("%+v\n", order)
+	return order
+}
+
+func (client *Client) GithubHandler(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+	data := Jsondecoder(w, r)
+	var issue = github.IssueRequest{
+		Title: &data.CreatedAt,
+		Body:  &data.Comments}
+
+	client.Github.Issues.Create(ctx, client.Owner, client.Repository, &issue)
 }
 
 //IssueParser : converts orderinfo struct to github issue request

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/dictyBase/gh-issue/auth"
+	"github.com/dictyBase/gh-issue/resources"
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -74,7 +75,7 @@ func RunServer(c *cli.Context) {
 		if err != nil {
 			log.Fatalf("error in creating regexp %s\n", err)
 		}*/
-	/*dsc := &handlers.Client{
+	dsc := &handlers.Client{
 
 		Github: ghClient,
 		//Label:      lm.Name2Id(c.String("label")),
@@ -89,7 +90,7 @@ func RunServer(c *cli.Context) {
 		valMw.ValidateMiddleware,
 	).With(context.Background()).ThenFunc(dsc.StockOrderHandler)
 	*/
-	//mux.Handle("/gmail/order", dscChain)
+	mux.Handle("/gh/order", handlers.GithubHandler)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))
 }

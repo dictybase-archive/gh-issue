@@ -1,0 +1,13 @@
+package: gh-issue
+import:
+- package: github.com/dictyBase/gh-issue
+  subpackages:
+  - commands
+- package: github.com/google/go-github
+  subpackages:
+  - github
+- package: github.com/julienschmidt/httprouter
+- package: github.com/manyminds/api2go
+  subpackages:
+  - jsonapi
+- package: gopkg.in/urfave/cli.v1

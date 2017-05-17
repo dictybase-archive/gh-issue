@@ -3,10 +3,12 @@ package commands
 import (
 	"fmt"
 
-	"github.com/urfave/cli"
+	"gopkg.in/urfave/cli.v1"
 )
 
-func TestFunction(c *cli.Context) error {
+func Hello() {
+	fmt.Println("hello")
+}
+func TestFunction(c *cli.Context) {
 	fmt.Println("testing out the server")
-	return nil
 }

@@ -5,8 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/dictyBase/gh-issue/resources"
-	"github.com/dictyBase/gmail-webhook/auth"
+	"github.com/dictyBase/gh-issue/auth"
 	"gopkg.in/urfave/cli.v1"
 )
 
@@ -75,7 +74,7 @@ func RunServer(c *cli.Context) {
 		if err != nil {
 			log.Fatalf("error in creating regexp %s\n", err)
 		}*/
-	dsc := &handlers.Client{
+	/*dsc := &handlers.Client{
 
 		Github: ghClient,
 		//Label:      lm.Name2Id(c.String("label")),

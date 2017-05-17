@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dictyBase/gh-issue/resources"
 	"github.com/dictyBase/gmail-webhook/auth"
-	"github.com/dictyBase/gmail-webhook/handlers"
-	"github.com/urfave/cli"
+	"gopkg.in/urfave/cli.v1"
 )
 
 func RunServer(c *cli.Context) {
@@ -77,12 +77,12 @@ func RunServer(c *cli.Context) {
 		}*/
 	dsc := &handlers.Client{
 
-		Github:     ghClient,
-		Label:      lm.Name2Id(c.String("label")),
+		Github: ghClient,
+		//Label:      lm.Name2Id(c.String("label")),
 		Repository: c.String("repository"),
 		Owner:      c.String("owner"),
 
-		Logger: logger,
+		//Logger: logger,
 	}
 	/*dscChain := apollo.New(
 		apollo.Wrap(logMw.LoggerMiddleware),

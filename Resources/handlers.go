@@ -13,11 +13,11 @@ import (
 )
 
 type Client struct {
-	Github      *github.Client
-	Label       string
-	Respository string
-	Owner       string
-	Logger      *log.Logger
+	Github     *github.Client
+	Label      string
+	Repository string
+	Owner      string
+	Logger     *log.Logger
 }
 
 /*

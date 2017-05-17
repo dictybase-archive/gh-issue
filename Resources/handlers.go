@@ -17,7 +17,7 @@ type Client struct {
 	Label      string
 	Repository string
 	Owner      string
-	Logger     *log.Logger
+	//Logger     *log.Logger
 }
 
 /*

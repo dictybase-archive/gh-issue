@@ -33,7 +33,7 @@ func RunServer(c *cli.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	//r := routes.NewRouter()
 	mux := http.NewServeMux()
 	/*valMw := &middlewares.GmailSubscription{
 		fmt.Sprintf(
@@ -90,7 +90,8 @@ func RunServer(c *cli.Context) {
 		valMw.ValidateMiddleware,
 	).With(context.Background()).ThenFunc(dsc.StockOrderHandler)
 	*/
-	mux.Handle("/gh/order", handlers.GithubHandler)
+	//r.Post("/order", handlers.GithubHandler())
+	mux.HandleFunc("/gh/order", dsc.GithubHandler)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))
 }

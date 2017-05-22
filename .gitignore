@@ -2,7 +2,7 @@
 *.o
 *.a
 *.so
-
+gh-issue
 # Folders
 _obj
 _test

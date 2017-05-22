@@ -1,11 +1,11 @@
 package commands
 
 import (
+	"context"
 	"fmt"
 	"io/ioutil"
 
 	"github.com/google/go-github/github"
-	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 
 	"gopkg.in/urfave/cli.v1"
@@ -34,9 +34,10 @@ func CreateIssue(c *cli.Context) {
 	body := c.String("body")
 	owner := c.String("owner")
 	repository := c.String("repository")
+	ctx := context.Background()
 	var issue = github.IssueRequest{
 		Title: &title,
 		Body:  &body}
 
-	client.Issues.Create(context.Context, owner, repository, &issue)
+	client.Issues.Create(ctx, owner, repository, &issue)
 }

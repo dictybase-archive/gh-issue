@@ -91,6 +91,7 @@ func RunServer(c *cli.Context) {
 	).With(context.Background()).ThenFunc(dsc.StockOrderHandler)
 	*/
 	//r.Post("/order", handlers.GithubHandler())
+
 	mux.HandleFunc("/gh/order", dsc.GithubHandler)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))

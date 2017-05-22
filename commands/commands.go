@@ -11,8 +11,9 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
-func TestFunction(c *cli.Context) {
+func TestFunction(c *cli.Context) error {
 	fmt.Println("testing out the server")
+	return nil
 }
 
 func CreateIssue(c *cli.Context) error {

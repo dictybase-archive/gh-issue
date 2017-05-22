@@ -11,17 +11,15 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
-func Hello() {
-	fmt.Println("hello")
-}
 func TestFunction(c *cli.Context) {
 	fmt.Println("testing out the server")
 }
 
 func CreateIssue(c *cli.Context) {
+	fmt.Println("start")
 	tok, err := ioutil.ReadFile(c.String("gh-token"))
 	if err != nil {
-		fmt.Errorf("error cannot open token")
+		fmt.Println("error cannot open token")
 	}
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: string(tok)},

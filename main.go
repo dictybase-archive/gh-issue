@@ -3,13 +3,13 @@ package main
 import (
 	"os"
 
-	"github.com/dictyBase/gh-issue/commands"
+	"gh-issue/commands"
 
 	"gopkg.in/urfave/cli.v1"
 )
 
 func main() {
-	commands.Hello()
+
 	app := cli.NewApp()
 	app.Version = "1.0.0"
 	app.Name = "gh-issue"

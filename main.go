@@ -21,10 +21,33 @@ func main() {
 			Usage:  "i'm testing out the server",
 			Action: commands.TestFunction,
 		},
-		Name:   "create",
-		Usage:  "Makes issue in Github",
-		Action: commands.CreateIssue,
-	},
-
-		app.Run(os.Args)
+		{
+			Name:   "create",
+			Usage:  "Makes issue in Github",
+			Action: commands.CreateIssue,
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "gh-token, at",
+					Usage: "Personal Access Token",
+				},
+				cli.StringFlag{
+					Name:  "title, t",
+					Usage: "Issue Title",
+				},
+				cli.StringFlag{
+					Name:  "body, b",
+					Usage: "Body text",
+				},
+				cli.StringFlag{
+					Name:  "owner, o",
+					Usage: "Repository owner",
+				},
+				cli.StringFlag{
+					Name:  "repository, r",
+					Usage: "repository",
+				},
+			},
+		},
+	}
+	app.Run(os.Args)
 }

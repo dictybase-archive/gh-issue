@@ -1,0 +1,51 @@
+hash: 0a220b3cc23a1daed625a1ba2b724c4e239abde7a9e4baebae8a6e8aff1b9a07
+updated: 2017-05-22T11:43:43.836347342-05:00
+imports:
+- name: github.com/dictyBase/gh-issue
+  version: b665bc125580c222966d780ea0dc6e0620a9f088
+  subpackages:
+  - commands
+  - models
+- name: github.com/gedex/inflector
+  version: 16278e9db8130ac7ec405dc174cfb94344f16325
+- name: github.com/golang/protobuf
+  version: fec3b39b059c0f88fa6b20f5ed012b1aa203a8b4
+  subpackages:
+  - proto
+- name: github.com/google/go-github
+  version: ebfec748347a9af6793c723f8859afcd906860fb
+  subpackages:
+  - github
+- name: github.com/google/go-querystring
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
+  subpackages:
+  - query
+- name: github.com/julienschmidt/httprouter
+  version: 975b5c4c7c21c0e3d2764200bf2aa8e34657ae6e
+- name: github.com/manyminds/api2go
+  version: dc368bb579c1a582faed50768e7fbcc463954c89
+  subpackages:
+  - jsonapi
+- name: golang.org/x/net
+  version: 513929065c19401a1c7b76ecd942f9f86a0c061b
+  subpackages:
+  - context
+- name: golang.org/x/oauth2
+  version: f047394b6d14284165300fd82dad67edb3a4d7f6
+  subpackages:
+  - internal
+- name: google.golang.org/appengine
+  version: 170382fa85b10b94728989dfcf6cc818b335c952
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
+- name: gopkg.in/urfave/cli.v1
+  version: 0bdeddeeb0f650497d603c4ad7b20cfe685682f6
+testImports: []

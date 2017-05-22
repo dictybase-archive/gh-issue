@@ -3,6 +3,7 @@ package commands
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
@@ -16,12 +17,12 @@ func TestFunction(c *cli.Context) {
 
 func CreateIssue(c *cli.Context) error {
 	fmt.Println("start2")
-	/*tok, err := ioutil.ReadFile(c.String("gh-token"))
+	tok, err := ioutil.ReadFile(c.String("gh-token"))
 	if err != nil {
 		return cli.NewExitError(err.Error(), 2)
-	}*/
+	}
 	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: c.String("gh-token")},
+		&oauth2.Token{AccessToken: string(tok)},
 	)
 	tc := oauth2.NewClient(oauth2.NoContext, ts)
 

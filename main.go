@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"gh-issue/commands"
+	"github.com/dictyBase/gh-issue/commands"
 
 	"gopkg.in/urfave/cli.v1"
 )

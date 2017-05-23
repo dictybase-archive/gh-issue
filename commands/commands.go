@@ -11,12 +11,11 @@ import (
 )
 
 func TestFunction(c *cli.Context) error {
-	fmt.Println("testing out the server")
+	fmt.Println("testing out cli")
 	return nil
 }
 
 func CreateIssue(c *cli.Context) error {
-	fmt.Println("start2")
 	//tok, err := ioutil.ReadFile(c.String("gh-token"))
 	//if err != nil {
 	//return cli.NewExitError(err.Error(), 2)

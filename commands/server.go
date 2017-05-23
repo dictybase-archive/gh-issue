@@ -8,8 +8,9 @@ import (
 	"net/http"
 	"os"
 
+	"gh-issue/gh-issue/resources"
+
 	"github.com/cyclopsci/apollo"
-	"github.com/dictyBase/gh-issue/handlers"
 	"github.com/dictyBase/gh-issue/middlewares"
 	"github.com/urfave/cli"
 )

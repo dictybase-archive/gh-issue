@@ -1,8 +1,12 @@
-package: gh-issue
+package: gh-issue/gh-issue
 import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/cyclopsci/apollo
 - package: github.com/dictyBase/gh-issue
   subpackages:
   - commands
+  - middlewares
+  - models
 - package: github.com/google/go-github
   subpackages:
   - github
@@ -10,4 +14,6 @@ import:
 - package: github.com/manyminds/api2go
   subpackages:
   - jsonapi
+- package: github.com/urfave/cli
+- package: golang.org/x/oauth2
 - package: gopkg.in/urfave/cli.v1

@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"gh-issue/gh-issue/resources"
+	"github.com/dictyBase/gh-issue/resources"
 
 	"github.com/cyclopsci/apollo"
 	"github.com/dictyBase/gh-issue/middlewares"
@@ -29,7 +29,7 @@ func RunServer(c *cli.Context) {
 	}
 	mux := http.NewServeMux()
 
-	Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.PlaceHolder)
+	Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
 	mux.Handle("/dicty/order", Chain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))

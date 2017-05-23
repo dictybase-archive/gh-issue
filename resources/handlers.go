@@ -120,6 +120,10 @@ func (client *Client) GithubHandler(ctx context.Context, w http.ResponseWriter, 
 	client.Github.Issues.Create(ctx, client.Owner, client.Repository, &issue)
 }
 
+func Placeholder() {
+	fmt.Printf("eventually replace this function with jsondecoder and github issue poster")
+}
+
 //IssueParser : converts orderinfo struct to github issue request
 //need to implement error handling
 /*

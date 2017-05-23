@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"gh-issue/gh-issue/commands"
 	"os"
-
-	"github.com/dictyBase/gh-issue/commands"
 
 	"gopkg.in/urfave/cli.v1"
 )
@@ -17,9 +17,14 @@ func main() {
 	app.Commands = []cli.Command{
 		//fill all this in later
 		{
-			Name:   "test",
-			Usage:  "i'm testing out the server",
-			Action: commands.TestFunction,
+			Name:  "test",
+			Usage: "i'm testing out the server",
+			Action: func(c *cli.Context) error {
+				fmt.Println("testing out the server")
+				return nil
+			},
+
+			//commands.TestFunction,
 		},
 		{
 			Name:   "create",
@@ -49,5 +54,6 @@ func main() {
 			},
 		},
 	}
+
 	app.Run(os.Args)
 }

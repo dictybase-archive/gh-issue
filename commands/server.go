@@ -1,17 +1,15 @@
 package commands
 
 import (
-	"context"
 	"fmt"
 
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/dictyBase/gh-issue/resources"
-
-	"github.com/cyclopsci/apollo"
 	"github.com/dictyBase/gh-issue/middlewares"
+	"github.com/dictyBase/gh-issue/resources"
+	"github.com/dictyBase/go-middlewares/middlewares/chain"
 	"github.com/urfave/cli"
 )
 
@@ -29,8 +27,9 @@ func RunServer(c *cli.Context) {
 	}
 	mux := http.NewServeMux()
 
-	Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
-	mux.Handle("/dicty/order", Chain)
+	baseChain := chain.NewChain(logMw.LoggerMiddleware).ThenFunc(handlers.Placeholder)
+	//Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
+	mux.Handle("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))
 }

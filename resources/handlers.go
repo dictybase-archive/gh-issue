@@ -120,7 +120,7 @@ func (client *Client) GithubHandler(ctx context.Context, w http.ResponseWriter, 
 	client.Github.Issues.Create(ctx, client.Owner, client.Repository, &issue)
 }
 
-func Placeholder(ctx context.Context, w http.ResponseWriter, r *http.Request) {
+func Placeholder(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("eventually replace this function with jsondecoder and github issue poster")
 	return
 }

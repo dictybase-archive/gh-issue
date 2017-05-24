@@ -52,6 +52,22 @@ func main() {
 				},
 			},
 		},
+		{
+			Name:   "run",
+			Usage:  "runs the server",
+			Action: commands.RunServer,
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "log,l",
+					Usage: "Name of the web request log file(optional), default goes to stderr",
+				},
+				cli.IntFlag{
+					Name:  "port",
+					Usage: "port on which the server listen",
+					Value: 9998,
+				},
+			},
+		},
 	}
 
 	app.Run(os.Args)

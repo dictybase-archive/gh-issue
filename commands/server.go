@@ -13,7 +13,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-func RunServer(c *cli.Context) {
+func RunServer(c *cli.Context) error {
 	var logMw *middlewares.Logger
 	if c.IsSet("log") {
 		w, err := os.Create(c.String("log"))
@@ -32,4 +32,5 @@ func RunServer(c *cli.Context) {
 	mux.Handle("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))
+	return nil
 }

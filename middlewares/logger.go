@@ -118,7 +118,7 @@ func (l *Logger) SetLogStarting(v bool) {
 	l.logStarting = v
 }
 
-func (l *Logger) LoggerMiddleware(h http.Handler) http.Handler {
+func (l *Logger) LoggerMiddleware(h http.HandlerFunc) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		start := l.clock.Now()
 

@@ -10,7 +10,7 @@ import (
 	"github.com/dictyBase/gh-issue/middlewares"
 	"github.com/dictyBase/gh-issue/resources"
 	"github.com/dictyBase/go-middlewares/middlewares/chain"
-	"github.com/urfave/cli"
+	"gopkg.in/urfave/cli.v1"
 )
 
 func RunServer(c *cli.Context) error {

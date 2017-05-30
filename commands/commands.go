@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"gh-issue/gh-issue/middlewares"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -36,13 +37,17 @@ func CreateIssue(c *cli.Context) error {
 	client := github.NewClient(tc)
 
 	title := c.String("title")
-	body := c.String("body")
+	body, err := ioutil.ReadFile("jsontest.txt")
+	if err != nil {
+		log.Fatalf("cannot read file %q\n", err)
+	}
+	bodystring := string(body)
 	owner := c.String("owner")
 	repository := c.String("repository")
 	ctx := context.Background()
 	var issue = github.IssueRequest{
 		Title: &title,
-		Body:  &body}
+		Body:  &bodystring}
 
 	client.Issues.Create(ctx, owner, repository, &issue)
 	return nil

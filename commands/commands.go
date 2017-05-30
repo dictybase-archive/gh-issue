@@ -69,6 +69,12 @@ func RunServer(c *cli.Context) error {
 	}
 	mux := http.NewServeMux()
 
+	ghInfo := &handlers.Client{
+		Token:      c.String("gh-token"),
+		Repository: c.String("repository"),
+		Owner:      c.String("owner"),
+	}
+
 	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(handlers.Placeholder)
 	//Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
 	mux.Handle("/dicty/order", baseChain)

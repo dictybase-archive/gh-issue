@@ -17,7 +17,6 @@ func main() {
 	app.Name = "gh-issue"
 	app.Usage = "Manage order requests"
 	app.Commands = []cli.Command{
-		//fill all this in later
 		{
 			Name:  "test",
 			Usage: "i'm testing out the server",
@@ -66,6 +65,10 @@ func main() {
 					Name:  "port",
 					Usage: "port on which the server listen",
 					Value: 9998,
+				},
+				cli.StringFlag{
+					Name:  "gh-token, at",
+					Usage: "Personal Access Token",
 				},
 			},
 		},

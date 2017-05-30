@@ -6,14 +6,15 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"golang.org/x/oauth2"
+
 	"github.com/dictyBase/gh-issue/models"
 	"github.com/google/go-github/github"
 	"github.com/manyminds/api2go/jsonapi"
 )
 
 type Client struct {
-	Github     *github.Client
-	Label      string
+	Token      string
 	Repository string
 	Owner      string
 	//Logger     *log.Logger
@@ -109,21 +110,35 @@ func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	return order
 }
 
-func (client *Client) GithubHandler(ctx context.Context, w http.ResponseWriter, r *http.Request) {
-	data := Jsondecoder(w, r)
-	var issue = github.IssueRequest{
-		Title: &data.CreatedAt,
-		Body:  &data.Comments}
-
-	client.Github.Issues.Create(ctx, client.Owner, client.Repository, &issue)
-}
-
 func Placeholder(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("eventually replace this function with jsondecoder and github issue poster2")
 	data := Jsondecoder(w, r)
 	fmt.Printf(data.ID)
 	fmt.Printf("end of Placeholder")
 	return
+}
+
+func (client *Client) GithubPoster() error {
+	tok := client.Token
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: string(tok)},
+	)
+	tc := oauth2.NewClient(oauth2.NoContext, ts)
+
+	gclient := github.NewClient(tc)
+
+	title := "Placeholder Title"
+	body := "Placeholder Body"
+
+	owner := client.Owner
+	repository := client.Repository
+	ctx := context.Background()
+	var issue = github.IssueRequest{
+		Title: &title,
+		Body:  &body}
+
+	gclient.Issues.Create(ctx, owner, repository, &issue)
+	return nil
 }
 
 //IssueParser : converts orderinfo struct to github issue request

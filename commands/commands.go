@@ -3,14 +3,15 @@ package commands
 import (
 	"context"
 	"fmt"
-	"gh-issue/gh-issue/middlewares"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 
-	"github.com/dictyBase/gh-issue/resources"
+	"gh-issue/gh-issue/resources"
+
 	"github.com/dictyBase/go-middlewares/middlewares/chain"
+	"github.com/dictybase/go-middlewares/middlewares/logrus"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 
@@ -55,20 +56,20 @@ func CreateIssue(c *cli.Context) error {
 }
 
 func RunServer(c *cli.Context) error {
-	var logMw *middlewares.Logger
+	var logMw *logrus.Logger
 	if c.IsSet("log") {
 		w, err := os.Create(c.String("log"))
 		if err != nil {
 			log.Fatalf("cannot open log file %q\n", err)
 		}
 		defer w.Close()
-		logMw = middlewares.NewFileLogger(w)
+		logMw = logrus.NewFileLogger(w)
 	} else {
-		logMw = middlewares.NewLogger()
+		logMw = logrus.NewLogger()
 	}
 	mux := http.NewServeMux()
 
-	baseChain := chain.NewChain(logMw.LoggerMiddleware).ThenFunc(handlers.Placeholder)
+	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(handlers.Placeholder)
 	//Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
 	mux.Handle("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))

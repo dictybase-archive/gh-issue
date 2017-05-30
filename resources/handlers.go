@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/dictyBase/gh-issue/models"
@@ -99,12 +98,11 @@ func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	var order models.Orderinfo
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		panic(err) //HANDLE THIS BETTER
+		http.Error(w, "error reading Body", http.StatusInternalServerError)
 	}
 	err = jsonapi.Unmarshal(body, &order)
 	if err != nil {
-		log.Print("unmarshal bad")
-		panic(err) //HANDLE THIS BETTER
+		http.Error(w, "error unmarshaling json struct", http.StatusInternalServerError)
 
 	}
 	fmt.Printf("%+v\n", order)
@@ -121,9 +119,10 @@ func (client *Client) GithubHandler(ctx context.Context, w http.ResponseWriter, 
 }
 
 func Placeholder(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("eventually replace this function with jsondecoder and github issue poster")
+	fmt.Printf("eventually replace this function with jsondecoder and github issue poster2")
 	data := Jsondecoder(w, r)
 	fmt.Printf(data.ID)
+	fmt.Printf("end of Placeholder")
 	return
 }
 

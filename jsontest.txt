@@ -1,0 +1,13 @@
+{
+"data":{
+	"type":"orderinfos",
+"id": "1",
+"attributes":{
+"created_at": "test",
+"updated_at": "test2",
+"courier": "fedex",
+"courieraccount": "34839439",
+"comments": "Whatever whatever",
+"payment": "cash", 
+"purchase_order_num": "123",
+"status": "status"}}}

@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/dictyBase/gh-issue/commands"
+	//"github.com/dictyBase/gh-issue/commands"
+	"gh-issue/gh-issue/commands"
 
 	"gopkg.in/urfave/cli.v1"
 )

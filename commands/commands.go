@@ -42,6 +42,7 @@ func CreateIssue(c *cli.Context) error {
 		log.Fatalf("cannot read file %q\n", err)
 	}
 	bodystring := string(body)
+	log.Printf(bodystring)
 	owner := c.String("owner")
 	repository := c.String("repository")
 	ctx := context.Background()

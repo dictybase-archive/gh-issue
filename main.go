@@ -70,6 +70,14 @@ func main() {
 					Name:  "gh-token, at",
 					Usage: "Personal Access Token",
 				},
+				cli.StringFlag{
+					Name:  "owner, o",
+					Usage: "Repository owner",
+				},
+				cli.StringFlag{
+					Name:  "repository, r",
+					Usage: "repository",
+				},
 			},
 		},
 	}

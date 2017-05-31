@@ -20,6 +20,101 @@ type Client struct {
 	//Logger     *log.Logger
 }
 
+//Jdecoder : returns struct with relevant order fields
+func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Welcome!\n")
+}
+
+func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
+	var order models.Orderinfo
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error reading Body", http.StatusInternalServerError)
+	}
+	err = jsonapi.Unmarshal(body, &order)
+	if err != nil {
+		http.Error(w, "error unmarshaling json struct", http.StatusInternalServerError)
+
+	}
+	fmt.Printf("%+v\n", order)
+	return order
+}
+
+func (client *Client) Placeholder(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("Begin Placeholder")
+	data := Jsondecoder(w, r)
+	dataString := client.MarkdownFormatter(data)
+	client.GithubPoster(dataString)
+	fmt.Printf("end of Placeholder")
+	return
+}
+
+func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
+	temp := order.ID + order.CreatedAt
+	return temp
+}
+
+func (client *Client) GithubPoster(data string) error {
+	tok := client.Token
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: string(tok)},
+	)
+	tc := oauth2.NewClient(oauth2.NoContext, ts)
+
+	gclient := github.NewClient(tc)
+
+	title := "Placeholder Title"
+	body := data
+
+	owner := client.Owner
+	repository := client.Repository
+	ctx := context.Background()
+	var issue = github.IssueRequest{
+		Title: &title,
+		Body:  &body}
+
+	gclient.Issues.Create(ctx, owner, repository, &issue)
+	return nil
+}
+
+//IssueParser : converts orderinfo struct to github issue request
+//need to implement error handling
+/*
+func (order *OrderInfo) IssueParser(o OrderInfo) (github.IssueRequest, error) {
+	var issue github.IssueRequest
+	issue.Title = &o.Title
+	//set the labels
+	if o.Plasmids != nil && o.Strains != nil {
+		issue.Labels = &[]string{"Strain Order", "Plasmid Order"}
+	} else if o.Plasmids == nil && o.Strains != nil {
+		issue.Labels = &[]string{"Strain Order"}
+	} else if o.Plasmids != nil && o.Strains == nil {
+		issue.Labels = &[]string{"Plasmid Order"}
+	} else {
+		return issue, fmt.Errorf("no order in order")
+	}
+	//generate markdown and put it in the body
+	//maybe try to use text/template package
+	/*"**Date:** {{.GeneralInfo.Date}}
+	  **Order ID:** {{GeneralInfo.OrderId}}"
+	  #Shipping and Billing Info#
+	| Shipping                  | Billing/Payer            |
+	|---------------------------|--------------------------|
+	| o.ShippingInfo.Name       | o.BillingInfo.Name       |
+	| o.ShippingInfo.University | o.BillingInfo.University |
+	| o.ShippingInfo.Lab        | o.BillingInfo.Lab        |
+	| o.ShippingInfo.Address    | o.BillingInfo.Address    |
+	| o.ShippingInfo.Address2   | o.BillingInfo.Address2   |
+	| o.ShippingInfo.Address3   | o.BillingInfo.Address3   |
+	| o.ShippingInfo.Country    | o.BillingInfo.Country    |
+	| o.ShippingInfo.Phone      | o.BillingInfo.Phone      |
+	| o.ShippingInfo.Email      | o.BillingInfo.Email      |
+	| o.ShippingInfo.Tracking   | o.BillingInfo.Payment    |
+
+
+	return issue, nil
+}*/
+
 /*
 type GeneralInfo struct {
 	Date    string `json:"date"`
@@ -88,93 +183,4 @@ type OrderInfo struct {
 	BillingInfo
 	Strains  []Strains
 	Plasmids []Plasmids
-}*/
-
-//Jdecoder : returns struct with relevant order fields
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome!\n")
-}
-
-func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
-	var order models.Orderinfo
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "error reading Body", http.StatusInternalServerError)
-	}
-	err = jsonapi.Unmarshal(body, &order)
-	if err != nil {
-		http.Error(w, "error unmarshaling json struct", http.StatusInternalServerError)
-
-	}
-	fmt.Printf("%+v\n", order)
-	return order
-}
-
-func Placeholder(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("eventually replace this function with jsondecoder and github issue poster2")
-	data := Jsondecoder(w, r)
-	fmt.Printf(data.ID)
-	fmt.Printf("end of Placeholder")
-	return
-}
-
-func (client *Client) GithubPoster() error {
-	tok := client.Token
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: string(tok)},
-	)
-	tc := oauth2.NewClient(oauth2.NoContext, ts)
-
-	gclient := github.NewClient(tc)
-
-	title := "Placeholder Title"
-	body := "Placeholder Body"
-
-	owner := client.Owner
-	repository := client.Repository
-	ctx := context.Background()
-	var issue = github.IssueRequest{
-		Title: &title,
-		Body:  &body}
-
-	gclient.Issues.Create(ctx, owner, repository, &issue)
-	return nil
-}
-
-//IssueParser : converts orderinfo struct to github issue request
-//need to implement error handling
-/*
-func (order *OrderInfo) IssueParser(o OrderInfo) (github.IssueRequest, error) {
-	var issue github.IssueRequest
-	issue.Title = &o.Title
-	//set the labels
-	if o.Plasmids != nil && o.Strains != nil {
-		issue.Labels = &[]string{"Strain Order", "Plasmid Order"}
-	} else if o.Plasmids == nil && o.Strains != nil {
-		issue.Labels = &[]string{"Strain Order"}
-	} else if o.Plasmids != nil && o.Strains == nil {
-		issue.Labels = &[]string{"Plasmid Order"}
-	} else {
-		return issue, fmt.Errorf("no order in order")
-	}
-	//generate markdown and put it in the body
-	//maybe try to use text/template package
-	/*"**Date:** {{.GeneralInfo.Date}}
-	  **Order ID:** {{GeneralInfo.OrderId}}"
-	  #Shipping and Billing Info#
-	| Shipping                  | Billing/Payer            |
-	|---------------------------|--------------------------|
-	| o.ShippingInfo.Name       | o.BillingInfo.Name       |
-	| o.ShippingInfo.University | o.BillingInfo.University |
-	| o.ShippingInfo.Lab        | o.BillingInfo.Lab        |
-	| o.ShippingInfo.Address    | o.BillingInfo.Address    |
-	| o.ShippingInfo.Address2   | o.BillingInfo.Address2   |
-	| o.ShippingInfo.Address3   | o.BillingInfo.Address3   |
-	| o.ShippingInfo.Country    | o.BillingInfo.Country    |
-	| o.ShippingInfo.Phone      | o.BillingInfo.Phone      |
-	| o.ShippingInfo.Email      | o.BillingInfo.Email      |
-	| o.ShippingInfo.Tracking   | o.BillingInfo.Payment    |
-
-
-	return issue, nil
 }*/

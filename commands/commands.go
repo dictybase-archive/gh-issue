@@ -55,6 +55,7 @@ func CreateIssue(c *cli.Context) error {
 	return nil
 }
 
+//RunServer starts server and sets up default route
 func RunServer(c *cli.Context) error {
 	var logMw *logrus.Logger
 	if c.IsSet("log") {

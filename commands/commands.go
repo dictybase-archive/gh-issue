@@ -75,7 +75,7 @@ func RunServer(c *cli.Context) error {
 		Owner:      c.String("owner"),
 	}
 
-	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(ghInfo.Placeholder)
+	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(ghInfo.OrderHandler)
 	//Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
 	mux.Handle("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))

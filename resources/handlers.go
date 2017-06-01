@@ -20,11 +20,12 @@ type Client struct {
 	//Logger     *log.Logger
 }
 
-//Jdecoder : returns struct with relevant order fields
+//Index
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome!\n")
 }
 
+//Jsondecoder expects POST request with JSON data and decodes it into struct
 func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	var order models.Orderinfo
 	body, err := ioutil.ReadAll(r.Body)
@@ -40,7 +41,8 @@ func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	return order
 }
 
-func (client *Client) Placeholder(w http.ResponseWriter, r *http.Request) {
+//OrderHandler calls the other functions to decode JSON, markdown format and post to github
+func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Begin Placeholder")
 	data := Jsondecoder(w, r)
 	dataString := client.MarkdownFormatter(data)
@@ -49,11 +51,14 @@ func (client *Client) Placeholder(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+//MarkdownFormatter : WIP: formats text from orderinfo struct to appropriate markdown
 func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
 	temp := order.ID + order.CreatedAt
 	return temp
 }
 
+//GithubPoster takes a string and posts it to github
+//Gets owner/repository/auth token from RunServer flags
 func (client *Client) GithubPoster(data string) error {
 	tok := client.Token
 	ts := oauth2.StaticTokenSource(

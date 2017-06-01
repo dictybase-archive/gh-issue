@@ -20,11 +20,12 @@ type Client struct {
 	//Logger     *log.Logger
 }
 
-//Index
+//Index doesn't do anything, delete later
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome!\n")
 }
 
+//GithubAuth takes the auth token as input and returns authorized github client
 func GithubAuth(token string) *github.Client {
 
 	ts := oauth2.StaticTokenSource(

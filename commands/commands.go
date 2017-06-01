@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"gh-issue/gh-issue/resources"
+	"gh-issue/gh-issue/routes"
 
 	"github.com/dictyBase/go-middlewares/middlewares/chain"
 	"github.com/dictybase/go-middlewares/middlewares/logrus"
@@ -68,7 +69,7 @@ func RunServer(c *cli.Context) error {
 	} else {
 		logMw = logrus.NewLogger()
 	}
-	mux := http.NewServeMux()
+	router := routes.NewRouter()
 
 	ghInfo := &handlers.Client{
 		Repository: c.String("repository"),
@@ -77,8 +78,8 @@ func RunServer(c *cli.Context) error {
 	}
 
 	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(ghInfo.OrderHandler)
-	mux.Handle("/dicty/order", baseChain)
+	router.Post("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), router.Router))
 	return nil
 }

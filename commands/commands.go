@@ -70,13 +70,12 @@ func RunServer(c *cli.Context) error {
 	mux := http.NewServeMux()
 
 	ghInfo := &handlers.Client{
-		Token:      c.String("gh-token"),
 		Repository: c.String("repository"),
 		Owner:      c.String("owner"),
+		GhClient:   handlers.GithubAuth(c.String("gh-token")),
 	}
 
 	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(ghInfo.OrderHandler)
-	//Chain := apollo.New(apollo.Wrap(logMw.LoggerMiddleware)).With(context.Background()).ThenFunc(handlers.Placeholder)
 	mux.Handle("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), mux))

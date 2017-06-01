@@ -14,15 +14,27 @@ import (
 )
 
 type Client struct {
-	Token      string
 	Repository string
 	Owner      string
+	GhClient   *github.Client
 	//Logger     *log.Logger
 }
 
 //Index
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Welcome!\n")
+}
+
+func GithubAuth(token string) *github.Client {
+
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: token},
+	)
+	tc := oauth2.NewClient(oauth2.NoContext, ts)
+
+	client := github.NewClient(tc) //IMPLEMENT ERROR HANDLING HERE
+
+	return client
 }
 
 //Jsondecoder expects POST request with JSON data and decodes it into struct
@@ -60,13 +72,8 @@ func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
 //GithubPoster takes a string and posts it to github
 //Gets owner/repository/auth token from RunServer flags
 func (client *Client) GithubPoster(data string) error {
-	tok := client.Token
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: string(tok)},
-	)
-	tc := oauth2.NewClient(oauth2.NoContext, ts)
 
-	gclient := github.NewClient(tc)
+	gclient := client.GhClient
 
 	title := "Placeholder Title"
 	body := data

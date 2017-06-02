@@ -39,6 +39,7 @@ func GithubAuth(token string) *github.Client {
 }
 
 //Jsondecoder expects POST request with JSON data and decodes it into struct
+//I think I can delete the below code bc its redundant but have to double check
 func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 	var order models.Orderinfo
 	body, err := ioutil.ReadAll(r.Body)
@@ -70,6 +71,7 @@ func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 //MarkdownFormatter : WIP: formats text from orderinfo struct to appropriate markdown
+//How in depth should I build this out?
 func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
 	temp := order.ID + order.CreatedAt
 	return temp

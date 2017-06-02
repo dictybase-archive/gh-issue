@@ -57,7 +57,12 @@ func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github
 func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("Begin Placeholder")
-	data := Jsondecoder(w, r)
+	data, ok := r.Context().Value("DecodedJson").(models.Orderinfo)
+	if !ok {
+		http.Error(w, "unable to retrieve context", http.StatusInternalServerError)
+		return
+	}
+
 	dataString := client.MarkdownFormatter(data)
 	client.GithubPoster(dataString)
 	fmt.Printf("end of Placeholder")

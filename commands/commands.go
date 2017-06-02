@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"gh-issue/gh-issue/middlewares"
 	"gh-issue/gh-issue/resources"
 	"gh-issue/gh-issue/routes"
 
@@ -77,7 +78,7 @@ func RunServer(c *cli.Context) error {
 		GhClient:   handlers.GithubAuth(c.String("gh-token")),
 	}
 
-	baseChain := chain.NewChain(logMw.MiddlewareFn).ThenFunc(ghInfo.OrderHandler)
+	baseChain := chain.NewChain(logMw.MiddlewareFn, validate.JsonValidator).ThenFunc(ghInfo.OrderHandler)
 	router.Post("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), router.Router))

@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"golang.org/x/oauth2"
@@ -19,6 +18,7 @@ type Client struct {
 }
 
 //GithubAuth takes the auth token as input and returns authorized github client
+//Unsure if this belongs in handlers.go or commands.go
 func GithubAuth(token string) *github.Client {
 
 	ts := oauth2.StaticTokenSource(
@@ -26,14 +26,13 @@ func GithubAuth(token string) *github.Client {
 	)
 	tc := oauth2.NewClient(oauth2.NoContext, ts)
 
-	client := github.NewClient(tc) //Supposed to implement error handling but github.NewClient only returns 1 item
+	client := github.NewClient(tc) //Supposed to implement error handling but github.NewClient only returns 1 item..?
 
 	return client
 }
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github
 func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Context().Value("DecodedJson"))
 	data, ok := r.Context().Value("DecodedJson").(models.Orderinfo)
 	if !ok {
 		http.Error(w, "unable to retrieve context", http.StatusInternalServerError)
@@ -48,7 +47,15 @@ func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
 //MarkdownFormatter : WIP: formats text from orderinfo struct to appropriate markdown
 //How in depth should I build this out?
 func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
-	temp := order.ID + order.CreatedAt
+	temp := "Order ID:" + order.ID + "\n" +
+		"CreatedAt:" + order.CreatedAt + "\n" +
+		"UpdatedAt:" + order.UpdatedAt + "\n" +
+		"Courier:" + order.Courier + "\n" +
+		"CourierAccount:" + order.CourierAccount + "\n" +
+		"Comments:" + order.Comments + "\n" +
+		"Payment:" + order.Payment + "\n" +
+		"PurchaseOrderNumb:" + order.PurchaseOrderNumb + "\n" +
+		"Status:" + order.Status + "\n"
 	return temp
 }
 

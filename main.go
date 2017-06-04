@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	//"github.com/dictyBase/gh-issue/commands"
@@ -17,14 +16,7 @@ func main() {
 	app.Name = "gh-issue"
 	app.Usage = "Manage order requests"
 	app.Commands = []cli.Command{
-		{
-			Name:  "test",
-			Usage: "i'm testing out the server",
-			Action: func(c *cli.Context) error {
-				fmt.Println("testing out the server")
-				return nil
-			},
-		},
+
 		{
 			Name:   "create",
 			Usage:  "Makes issue in Github",

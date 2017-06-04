@@ -9,7 +9,7 @@ import (
 	"github.com/manyminds/api2go/jsonapi"
 )
 
-//JsonValidator breaks chain if JSON is not validat and passes the decodedJSON on through context
+//JsonValidator breaks chain if JSON is not valid and passes the decodedJSON on through context
 func JsonValidator(fn http.HandlerFunc) http.HandlerFunc {
 	var order models.Orderinfo
 

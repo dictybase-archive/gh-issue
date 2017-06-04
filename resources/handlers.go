@@ -3,26 +3,18 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 
 	"golang.org/x/oauth2"
 
 	"github.com/dictyBase/gh-issue/models"
 	"github.com/google/go-github/github"
-	"github.com/manyminds/api2go/jsonapi"
 )
 
 type Client struct {
 	Repository string
 	Owner      string
 	GhClient   *github.Client
-	//Logger     *log.Logger
-}
-
-//Index doesn't do anything, delete later
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Welcome!\n")
 }
 
 //GithubAuth takes the auth token as input and returns authorized github client
@@ -36,23 +28,6 @@ func GithubAuth(token string) *github.Client {
 	client := github.NewClient(tc) //IMPLEMENT ERROR HANDLING HERE
 
 	return client
-}
-
-//Jsondecoder expects POST request with JSON data and decodes it into struct
-//I think I can delete the below code bc its redundant but have to double check
-func Jsondecoder(w http.ResponseWriter, r *http.Request) models.Orderinfo {
-	var order models.Orderinfo
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "error reading Body", http.StatusInternalServerError)
-	}
-	err = jsonapi.Unmarshal(body, &order)
-	if err != nil {
-		http.Error(w, "error unmarshaling json struct", http.StatusInternalServerError)
-
-	}
-	fmt.Printf("%+v\n", order)
-	return order
 }
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github

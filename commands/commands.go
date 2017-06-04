@@ -8,6 +8,9 @@ import (
 	"net/http"
 	"os"
 
+	//"github.com/dictyBase/gh-issue/middlewares"
+	//"github.com/dictyBase/gh-issue/resources"
+	//"github.com/dictyBase/gh-issue/routes"
 	"gh-issue/gh-issue/middlewares"
 	"gh-issue/gh-issue/resources"
 	"gh-issue/gh-issue/routes"
@@ -20,6 +23,8 @@ import (
 	"gopkg.in/urfave/cli.v1"
 )
 
+//CreateIssue creates githubclient and posts an issue to specified
+//repository/owner (can probably be deleted)
 func CreateIssue(c *cli.Context) error {
 	tok := c.String("gh-token")
 	ts := oauth2.StaticTokenSource(

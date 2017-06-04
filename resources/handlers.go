@@ -7,7 +7,8 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/dictyBase/gh-issue/models"
+	"gh-issue/gh-issue/models"
+
 	"github.com/google/go-github/github"
 )
 
@@ -32,7 +33,7 @@ func GithubAuth(token string) *github.Client {
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github
 func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Context())
+	fmt.Println(r.Context().Value("DecodedJson"))
 	data, ok := r.Context().Value("DecodedJson").(models.Orderinfo)
 	if !ok {
 		http.Error(w, "unable to retrieve context", http.StatusInternalServerError)

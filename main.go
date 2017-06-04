@@ -46,7 +46,7 @@ func main() {
 		},
 		{
 			Name:   "run",
-			Usage:  "runs the server",
+			Usage:  "Runs the server",
 			Action: commands.RunServer,
 			Flags: []cli.Flag{
 				cli.StringFlag{

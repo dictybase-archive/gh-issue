@@ -2,7 +2,6 @@ package validate
 
 import (
 	"context"
-	"fmt"
 	"gh-issue/gh-issue/models"
 	"io/ioutil"
 	"net/http"
@@ -13,7 +12,6 @@ import (
 //JsonValidator breaks chain if JSON is not valid and passes the decodedJSON on through context
 func JsonValidator(fn http.HandlerFunc) http.HandlerFunc {
 	var order models.Orderinfo
-	fmt.Printf("ajhhh")
 	newfn := func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {

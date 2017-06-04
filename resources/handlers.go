@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"golang.org/x/oauth2"
@@ -31,6 +32,7 @@ func GithubAuth(token string) *github.Client {
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github
 func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Context())
 	data, ok := r.Context().Value("DecodedJson").(models.Orderinfo)
 	if !ok {
 		http.Error(w, "unable to retrieve context", http.StatusInternalServerError)

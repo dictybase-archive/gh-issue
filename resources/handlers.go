@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"golang.org/x/oauth2"
@@ -25,23 +24,21 @@ func GithubAuth(token string) *github.Client {
 	)
 	tc := oauth2.NewClient(oauth2.NoContext, ts)
 
-	client := github.NewClient(tc) //IMPLEMENT ERROR HANDLING HERE
+	client := github.NewClient(tc) //Supposed to implement error handling but github.NewClient only returns 1 item
 
 	return client
 }
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github
 func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Begin Placeholder")
 	data, ok := r.Context().Value("DecodedJson").(models.Orderinfo)
 	if !ok {
 		http.Error(w, "unable to retrieve context", http.StatusInternalServerError)
 		return
 	}
-
+	title := "Owner:" + data.ID
 	dataString := client.MarkdownFormatter(data)
-	client.GithubPoster(dataString)
-	fmt.Printf("end of Placeholder")
+	client.GithubPoster(dataString, title)
 	return
 }
 
@@ -54,11 +51,10 @@ func (client *Client) MarkdownFormatter(order models.Orderinfo) string {
 
 //GithubPoster takes a string and posts it to github
 //Gets owner/repository/auth token from RunServer flags
-func (client *Client) GithubPoster(data string) error {
+func (client *Client) GithubPoster(data string, title string) error {
 
 	gclient := client.GhClient
 
-	title := "Placeholder Title"
 	body := data
 
 	owner := client.Owner

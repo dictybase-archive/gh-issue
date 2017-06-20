@@ -2,6 +2,7 @@ package validate
 
 import (
 	"context"
+	"io"
 	//"github.com/dictyBase/gh-issue/models"
 	"gh-issue/gh-issue/models"
 	"io/ioutil"
@@ -9,6 +10,17 @@ import (
 
 	"github.com/manyminds/api2go/jsonapi"
 )
+
+//TEMP
+func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
+	// A very simple health check.
+	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Content-Type", "application/json")
+
+	// In the future we could report back on the status of our DB, or our cache
+	// (e.g. Redis) by performing a simple PING, and include them in the response.
+	io.WriteString(w, `{"alive": true}`)
+}
 
 //JSONValidator breaks chain if JSON is not valid and passes the decodedJSON on through context
 func JSONValidator(fn http.HandlerFunc) http.HandlerFunc {

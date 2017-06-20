@@ -41,7 +41,7 @@ func RunServer(c *cli.Context) error {
 		GhClient:   auth.GithubAuth(c.String("gh-token")),
 	}
 
-	baseChain := chain.NewChain(logMw.MiddlewareFn, validate.JsonValidator).ThenFunc(ghInfo.OrderHandler)
+	baseChain := chain.NewChain(logMw.MiddlewareFn, validate.JSONValidator).ThenFunc(ghInfo.OrderHandler)
 	router.Post("/dicty/order", baseChain)
 	log.Printf("Starting web server on port %d\n", c.Int("port"))
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", c.Int("port")), router.Router))

@@ -1,5 +1,6 @@
 package models
 
+//Orderinfo is go struct of the data received from POST request
 type Orderinfo struct {
 	ID                string `json:"-"`
 	CreatedAt         string `json:"created_at"`
@@ -12,11 +13,7 @@ type Orderinfo struct {
 	Status            string `json:"status"`
 }
 
-/*
-type UnmarshalIdentifier interface {
-	SetID(string) error
-}*/
-
+//SetID necessary to satisfy UnmarshalIdentifier interface
 func (order *Orderinfo) SetID(id string) error {
 	order.ID = id
 	return nil

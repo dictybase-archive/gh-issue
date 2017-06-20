@@ -9,12 +9,12 @@ import (
 
 const params = "params"
 
-//httprouter wrapper
+//RouterWrapper httprouter wrapper
 type RouterWrapper struct {
 	Router *httprouter.Router
 }
 
-//initialization
+//NewRouter initialization
 func NewRouter() *RouterWrapper {
 	return &RouterWrapper{Router: httprouter.New()}
 }
@@ -28,6 +28,8 @@ func (r *RouterWrapper) Get(path string, fn http.HandlerFunc) {
 func (r *RouterWrapper) Post(path string, fn http.HandlerFunc) {
 	r.Router.POST(path, HandlerFunc(fn))
 }
+
+//HandlerFunc puts params into context
 func HandlerFunc(fn http.HandlerFunc) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		ctx := context.WithValue(r.Context(), params, p)
@@ -35,7 +37,7 @@ func HandlerFunc(fn http.HandlerFunc) httprouter.Handle {
 	}
 }
 
-// Context returns the URL parameters
+//Params makes Context return the URL parameters
 func Params(r *http.Request) httprouter.Params {
 	return r.Context().Value(params).(httprouter.Params)
 }

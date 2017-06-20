@@ -10,6 +10,7 @@ import (
 	"github.com/google/go-github/github"
 )
 
+//Client contains github client as well as the repository/owner info
 type Client struct {
 	Repository string
 	Owner      string

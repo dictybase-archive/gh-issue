@@ -16,12 +16,12 @@ func JsonValidator(fn http.HandlerFunc) http.HandlerFunc {
 	newfn := func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
-			http.Error(w, "error reading Body", http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 
 		}
 		err = jsonapi.Unmarshal(body, &order)
 		if err != nil {
-			http.Error(w, "error unmarshaling json struct", http.StatusInternalServerError)
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 
 		}
 		ctx := context.WithValue(r.Context(), "DecodedJson", order)

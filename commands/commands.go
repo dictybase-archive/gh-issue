@@ -1,9 +1,7 @@
 package commands
 
 import (
-	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -17,40 +15,9 @@ import (
 
 	"github.com/dictyBase/go-middlewares/middlewares/chain"
 	"github.com/dictybase/go-middlewares/middlewares/logrus"
-	"github.com/google/go-github/github"
-	"golang.org/x/oauth2"
 
 	"gopkg.in/urfave/cli.v1"
 )
-
-//CreateIssue creates githubclient and posts an issue to specified
-//repository/owner (can probably be deleted)
-func CreateIssue(c *cli.Context) error {
-	tok := c.String("gh-token")
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: string(tok)},
-	)
-	tc := oauth2.NewClient(oauth2.NoContext, ts)
-
-	client := github.NewClient(tc)
-
-	title := c.String("title")
-	body, err := ioutil.ReadFile("jsontest.txt")
-	if err != nil {
-		log.Fatalf("cannot read file %q\n", err)
-	}
-	bodystring := string(body)
-	log.Printf(bodystring)
-	owner := c.String("owner")
-	repository := c.String("repository")
-	ctx := context.Background()
-	var issue = github.IssueRequest{
-		Title: &title,
-		Body:  &bodystring}
-
-	client.Issues.Create(ctx, owner, repository, &issue)
-	return nil
-}
 
 //RunServer starts server and sets up default route
 func RunServer(c *cli.Context) error {

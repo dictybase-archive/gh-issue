@@ -17,6 +17,7 @@ func JsonValidator(fn http.HandlerFunc) http.HandlerFunc {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "error reading Body", http.StatusInternalServerError)
+
 		}
 		err = jsonapi.Unmarshal(body, &order)
 		if err != nil {

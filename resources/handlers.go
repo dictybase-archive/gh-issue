@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"golang.org/x/oauth2"
 	//"github.com/dictyBase/gh-issue/models"
 	"gh-issue/gh-issue/models"
 
@@ -15,20 +14,6 @@ type Client struct {
 	Repository string
 	Owner      string
 	GhClient   *github.Client
-}
-
-//GithubAuth takes the auth token as input and returns authorized github client
-//Unsure if this belongs in handlers.go or commands.go
-func GithubAuth(token string) *github.Client {
-
-	ts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: token},
-	)
-	tc := oauth2.NewClient(oauth2.NoContext, ts)
-
-	client := github.NewClient(tc) //Supposed to implement error handling but github.NewClient only returns 1 item..?
-
-	return client
 }
 
 //OrderHandler calls the other functions to decode JSON, markdown format and post to github

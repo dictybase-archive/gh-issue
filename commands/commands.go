@@ -9,6 +9,7 @@ import (
 	//"github.com/dictyBase/gh-issue/middlewares"
 	//"github.com/dictyBase/gh-issue/resources"
 	//"github.com/dictyBase/gh-issue/routes"
+	"gh-issue/gh-issue/auth"
 	"gh-issue/gh-issue/middlewares"
 	"gh-issue/gh-issue/resources"
 	"gh-issue/gh-issue/routes"
@@ -37,7 +38,7 @@ func RunServer(c *cli.Context) error {
 	ghInfo := &handlers.Client{
 		Repository: c.String("repository"),
 		Owner:      c.String("owner"),
-		GhClient:   handlers.GithubAuth(c.String("gh-token")),
+		GhClient:   auth.GithubAuth(c.String("gh-token")),
 	}
 
 	baseChain := chain.NewChain(logMw.MiddlewareFn, validate.JsonValidator).ThenFunc(ghInfo.OrderHandler)

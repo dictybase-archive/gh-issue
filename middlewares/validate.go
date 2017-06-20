@@ -12,6 +12,25 @@ import (
 )
 
 //TEMP
+func Temp(w http.ResponseWriter, r *http.Request) {
+	//var order models.Orderinfo
+	io.WriteString(w, `{"alive": true}`)
+	body, err := ioutil.ReadAll(r.Body)
+	if body != nil {
+		http.Error(w, "body not nil", http.StatusInternalServerError)
+		return
+	}
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	// err = jsonapi.Unmarshal(body, &order)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+	// 	return
+	// }
+}
+
 func HealthCheckHandler(w http.ResponseWriter, r *http.Request) {
 	// A very simple health check.
 	w.WriteHeader(http.StatusOK)

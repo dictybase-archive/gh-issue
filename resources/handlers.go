@@ -26,6 +26,7 @@ func (client *Client) OrderHandler(w http.ResponseWriter, r *http.Request) {
 	title := "Owner:" + data.ID
 	dataString := client.MarkdownFormatter(data)
 	client.GithubPoster(dataString, title)
+	w.WriteHeader(200)
 	return
 }
 

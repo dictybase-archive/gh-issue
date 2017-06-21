@@ -48,7 +48,7 @@ func TestJSONValidator(t *testing.T) {
 	testHandlerFn := http.HandlerFunc(temp)
 	w := httptest.NewRecorder()
 
-	b := bytes.NewBufferString("test22")
+	b := bytes.NewBufferString("")
 	req, err := http.NewRequest("POST", "/json-test", b)
 	if err != nil {
 		t.Fatal(err)

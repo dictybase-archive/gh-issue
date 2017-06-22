@@ -17,7 +17,7 @@ func temp(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(200)
 }
 
-//Fills body with empty string isntead of expected JSON format so unmarshal should fail
+//TestUnmarshalFailure Fills body with empty string isntead of expected JSON format so unmarshal should fail
 func TestUnmarshalFailure(t *testing.T) {
 
 	testHandlerFn := http.HandlerFunc(temp)
@@ -38,6 +38,7 @@ func TestUnmarshalFailure(t *testing.T) {
 	}
 }
 
+//TestSuccess passes correct JSON so status code should be 200 (OK)
 func TestSuccess(t *testing.T) {
 
 	testHandlerFn := http.HandlerFunc(temp)

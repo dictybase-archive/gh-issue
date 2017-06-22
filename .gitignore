@@ -22,3 +22,7 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+auth_token.txt
+repository.txt
+owner.txt

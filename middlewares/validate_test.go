@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"gh-issue/gh-issue/models"
-	//"github.com/dictyBase/gh-issue/models"
+	//"gh-issue/gh-issue/models"
+	"github.com/dictyBase/gh-issue/models"
 
 	"github.com/manyminds/api2go/jsonapi"
 )

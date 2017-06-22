@@ -3,17 +3,11 @@ package main
 import (
 	"os"
 
-	//"github.com/dictyBase/gh-issue/commands"
-	"gh-issue/gh-issue/commands"
+	"github.com/dictyBase/gh-issue/commands"
+	//"gh-issue/gh-issue/commands"
 
 	"gopkg.in/urfave/cli.v1"
 )
-
-//TEMP DELETE THIS later
-func Sum(x int, y int) int {
-	sum := x + y
-	return sum
-}
 
 func main() {
 

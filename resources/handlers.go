@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	//"github.com/dictyBase/gh-issue/models"
-	"gh-issue/gh-issue/models"
+	"github.com/dictyBase/gh-issue/models"
+	//"gh-issue/gh-issue/models"
 
 	"github.com/google/go-github/github"
 )

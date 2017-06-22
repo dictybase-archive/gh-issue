@@ -2,9 +2,14 @@ package handlers
 
 import (
 	"bytes"
-	"gh-issue/gh-issue/auth"
-	"gh-issue/gh-issue/middlewares"
-	"gh-issue/gh-issue/models"
+
+	//"gh-issue/gh-issue/auth"
+	//"gh-issue/gh-issue/middlewares"
+	//"gh-issue/gh-issue/models"
+
+	"github.com/dictyBase/gh-issue/auth"
+	"github.com/dictyBase/gh-issue/middlewares"
+	"github.com/dictyBase/gh-issue/models"
 
 	"github.com/manyminds/api2go/jsonapi"
 

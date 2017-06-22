@@ -2,12 +2,14 @@ package validate
 
 import (
 	"context"
-	//"github.com/dictyBase/gh-issue/models"
-	"gh-issue/gh-issue/models"
+
 	"io/ioutil"
 	"net/http"
 
 	"github.com/manyminds/api2go/jsonapi"
+
+	"github.com/dictyBase/gh-issue/models"
+	//"gh-issue/gh-issue/models"
 )
 
 //JSONValidator breaks chain if JSON is not valid and passes the decodedJSON on through context

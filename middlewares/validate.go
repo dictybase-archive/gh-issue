@@ -2,7 +2,6 @@ package validate
 
 import (
 	"context"
-	"fmt"
 	//"github.com/dictyBase/gh-issue/models"
 	"gh-issue/gh-issue/models"
 	"io/ioutil"
@@ -20,7 +19,6 @@ func JSONValidator(fn http.HandlerFunc) http.HandlerFunc {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		fmt.Print(body)
 		err = jsonapi.Unmarshal(body, &order)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

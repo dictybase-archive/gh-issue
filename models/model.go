@@ -19,6 +19,7 @@ func (order *Orderinfo) SetID(id string) error {
 	return nil
 }
 
-func (order *Orderinfo) GetID() string {
+//GetID necessary to satisfy MarshalIdentifier interface
+func (order Orderinfo) GetID() string {
 	return order.ID
 }

@@ -18,3 +18,7 @@ func (order *Orderinfo) SetID(id string) error {
 	order.ID = id
 	return nil
 }
+
+func (order *Orderinfo) GetID() string {
+	return order.ID
+}
